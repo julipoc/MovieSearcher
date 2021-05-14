@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content%}
+
+{% if movie_three %}
+
+{% for m in movie_three %}
+    <div class="all_cards"  >
+        <div class="card">
+            {% if m["cover"]%}
+            <img class="image" src={{m["cover"]}}>
+            {% else %}
+            <img class="image" src="static/poster.png">
+            {% endif %}
+        </div>
+
+        <div class="card-body" >
+            {% if m["year"] %}
+            <h5 class="title">{{m["title"]}} ({{m["year"]}})</h5>
+            {% else %}
+            <h5 class="title">{{m["title"]}}</h5>
+            {% endif %}
+
+            {% if m["genres"]%}
+            <h6 class="genres">{{m["genres"][0]}} {{m["genres"][1]}} {{m["genres"][2]}}</h6>
+            {% endif %}
+
+            <h6 class="type">{{m["kind"]}}</h6>
+
+            {% if m["rating"]%}
+            <h6 class="rating">
+                <img class="rating-star" src="static/star.png" width="20" height="20"> {{m["rating"]}}</h6>
+            {% endif %}
+
+            {% if m["plot"] %}
+            <p class="plot">{{m["plot"][0].split("::")[0]}}</p>
+            {% endif %}
+
+            <a href=https://www.imdb.com/title/tt{{m["movieID"]}} class="card-link">
+                <img class="imdb" src="static/imdb.jpg" width="40" height="26">
+            </a>
+            <a href="{{url_for('movies')}}" class="card-link">
+                <img class="home" src="static/favicon.png" width="24" height="24">
+            </a>
+        </div>
+    </div>
+{% endfor %}
+
+{% else %}
+
+    <div class="container" align="center">
+        <h3>Search for Movies</h3><br>
+        <form class="search" action="{{url_for('movies')}}" method="POST">
+            <input type="search" placeholder=" Type here..." name="name" ><br><br>
+            <button class="button" type="submit" value="submit">Search</button>
+        </form>
+    </div>
+
+{% endif %}
+
+{% endblock %}
